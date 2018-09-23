@@ -1,6 +1,5 @@
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
-from A_logistic_regression.utils.steps import *
 from A_logistic_regression.utils.convolution import *
 from A_logistic_regression.utils.generator import *
 
@@ -16,17 +15,18 @@ init = tf.global_variables_initializer()
 sess = tf.InteractiveSession()
 sess.run(init)
 
+# 처음 두 개의 차원은 윈도우의 크기, 세 번째는 입력 채널의 수, 마지막은 출력 채널의 수
 W_conv1 = weight_variable([5, 5, 1, 32])
 b_conv1 = bias_variable([32])
 
-h_conv1 = tf.nn.relu(conv2d(x_image, W_conv1) + b_conv1)
-h_pool1 = max_pool_2x2(h_conv1)
+h_conv1 = tf.nn.relu(conv2d(x_image, W_conv1) + b_conv1)  # Tensor("Relu:0", shape=(?, 28, 28, 32), dtype=float32)
+h_pool1 = max_pool_2x2(h_conv1)  # Tensor("MaxPool:0", shape=(?, 14, 14, 32), dtype=float32)
 
 W_conv2 = weight_variable([5, 5, 32, 64])
 b_conv2 = bias_variable([64])
 
-h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)
-h_pool2 = max_pool_2x2(h_conv2)
+h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)  # Tensor("Relu_1:0", shape=(?, 14, 14, 64), dtype=float32)
+h_pool2 = max_pool_2x2(h_conv2)  # Tensor("MaxPool_1:0", shape=(?, 7, 7, 64), dtype=float32)
 
 W_fc1 = weight_variable([7 * 7 * 64, 1024])
 b_fc1 = bias_variable([1024])

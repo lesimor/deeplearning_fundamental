@@ -1,5 +1,6 @@
 import tensorflow as tf
 
+__all__ = ['inference', 'loss', 'training', 'evaluate']
 
 def inference(x):
     init = tf.constant_initializer(value=0)
